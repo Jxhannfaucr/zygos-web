@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import Image from 'next/image'
 import { client } from '../lib/sanity'
+import AnimatedHeroBackground from "@/components/AnimatedHeroBackground";
 
 // 1. Interfaz actualizada con el arreglo de galería y el drop
 interface Producto {
@@ -36,7 +37,7 @@ export default async function Catalogo() {
           <div className="flex items-center gap-3 cursor-pointer">
             <div className="relative w-10 h-10">
               <Image 
-                src="/zygos-logo.png" 
+                src="/zygos_black.png" 
                 alt="Zygos Logo" 
                 fill 
                 className="object-contain"
@@ -55,20 +56,34 @@ export default async function Catalogo() {
       </header>
 
       {/* HERO SECTION IMMERSIVO */}
-      <section className="relative w-full h-[85vh] flex items-center justify-center overflow-hidden border-b border-neutral-900">
-        <div className="relative z-10 flex flex-col items-center text-center px-4 mt-16">
-          <span className="text-xs font-bold tracking-[0.3em] text-neutral-400 mb-6 uppercase">
-            // Nueva Temporada //
+      <section className="relative w-full h-[85vh] flex flex-col items-center justify-between py-12 border-b border-neutral-900 bg-black text-white px-4 overflow-x-hidden">
+        
+        {/* NUEVO FONDO ANIMADO */}
+        <AnimatedHeroBackground />
+
+        {/* Espacio superior para balance */}
+        <div />
+
+        {/* Contenido Central */}
+        <div className="z-10 flex flex-col items-center text-center max-w-full px-2">
+          <span className="text-[10px] font-mono tracking-[0.3em] text-neutral-500 mb-6 uppercase border border-neutral-900 px-3 py-1">
+            // Origin: Upala, CR //
           </span>
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter uppercase leading-[0.85] mb-8">
-            Defy<br />The Norm
+          
+          <h1 className="text-4xl sm:text-5xl md:text-8xl lg:text-9xl font-black tracking-tighter uppercase leading-[0.85] mb-6 w-full break-words">
+            Unión<br /> 
+            <span className="text-3xl sm:text-5xl">Streetwear</span>
           </h1>
-          <a 
-            href="#catalogo" 
-            className="bg-white text-black px-10 py-4 text-sm font-bold tracking-[0.1em] uppercase hover:bg-neutral-200 hover:scale-105 transition-all duration-300"
-          >
-            Explorar Colección
-          </a>
+
+          <p className="text-neutral-400 text-xs sm:text-sm md:text-base font-medium max-w-sm leading-relaxed px-2">
+            El balance entre lo clásico y lo urbano. 
+            Cada pieza conecta culturas, estilos y personas.
+          </p>
+        </div>
+
+        {/* Información de envío */}
+        <div className="z-10 flex items-center justify-center text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-neutral-600 border-t border-neutral-900 pt-6 w-full max-w-lg px-4">
+          <span>// Envío nacional a todo Costa Rica</span>
         </div>
       </section>
 
@@ -162,7 +177,7 @@ export default async function Catalogo() {
       {/* FOOTER BÁSICO */}
       <footer className="border-t border-neutral-900 py-12 text-center flex flex-col items-center">
          <div className="relative w-12 h-12 mb-6 opacity-50">
-            <Image src="/zygos-logo.png" alt="Zygos Logo" fill className="object-contain" />
+            <Image src="/zygos_black.png" alt="Zygos Logo" fill className="object-contain" />
          </div>
          <p className="text-xs font-bold tracking-widest text-neutral-600 uppercase">
            © 2026 Zygos Store. Todos los derechos reservados.
