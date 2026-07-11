@@ -26,7 +26,7 @@ export default async function Catalogo() {
   }`
   
   const productos: Producto[] = await client.fetch(query)
-  const numeroWhatsApp = "50688888888" 
+  const numeroWhatsApp = "50663512613" 
 
   return (
     <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
