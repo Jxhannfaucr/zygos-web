@@ -35,6 +35,23 @@ export default function AnimatedHeroBackground() {
     const cam = { x: 0, y: 0 };
     const mouse = { x: 0, y: 0 };
 
+    // ==========================================
+    // CONFIGURACIÓN DE MARCAS Y COLORES NEÓN
+    // ==========================================
+    const BRANDS = [
+      "ZYGOS (SOON)", "SUPREME", "HELLSTAR", "GODSPEED", 
+      "MIXED EMOTION", "BAPE", "LIFE HUSTLER", "DUAA", "VALLE DREAMS", "MAJESTIK",
+      "+MÁS"
+    ]; // <-- Modifica esta lista con tus marcas
+
+    const NEON_COLORS = [
+      "0, 255, 255",   // Cyan
+      "255, 0, 255",   // Magenta
+      "57, 255, 20",   // Verde Neón
+      "255, 255, 0",   // Amarillo
+      "255, 49, 49",   // Rojo Neón
+    ];
+
     function smoothstep(e0: number, e1: number, x: number) {
       const t = Math.min(1, Math.max(0, (x - e0) / (e1 - e0)));
       return t * t * (3 - 2 * t);
@@ -182,9 +199,10 @@ export default function AnimatedHeroBackground() {
     }
 
     function maybeSpawnDataPoint(t: number) {
-      if (dataPoints.length >= 2 || Math.random() > 0.006) return;
+      // Modificación: Permitimos hasta 5 textos al mismo tiempo y subimos la probabilidad de spawn a 0.015
+      if (dataPoints.length >= 5 || Math.random() > 0.015) return;
       const corner = Math.floor(Math.random() * 4);
-      const margin = 40;
+      const margin = 50;
       let x, y;
       if (corner === 0) {
         x = margin + Math.random() * width * 0.22;
@@ -199,16 +217,16 @@ export default function AnimatedHeroBackground() {
         x = width - margin - Math.random() * width * 0.22;
         y = height - margin - Math.random() * height * 0.22;
       }
-      const hex = Math.floor(Math.random() * 0xffff)
-        .toString(16)
-        .toUpperCase()
-        .padStart(4, "0");
-      const label = Math.random() > 0.5 ? `0x${hex}` : `${Math.floor(x)}.${Math.floor(y)}`;
-      dataPoints.push({ x, y, label, born: t, life: 2.4 + Math.random() * 1.2 });
+      
+      // Asignamos una marca y un color aleatorio en lugar del hex
+      const label = BRANDS[Math.floor(Math.random() * BRANDS.length)];
+      const color = NEON_COLORS[Math.floor(Math.random() * NEON_COLORS.length)];
+
+      dataPoints.push({ x, y, label, color, born: t, life: 2.0 + Math.random() * 1.5 });
     }
 
     function drawDataPoints(t: number) {
-      ctx.font = "10px ui-monospace, 'JetBrains Mono', monospace";
+      ctx.font = "bold 11px ui-monospace, 'JetBrains Mono', monospace"; // Hice la fuente en negrita
       ctx.textBaseline = "middle";
       for (let i = dataPoints.length - 1; i >= 0; i--) {
         const d = dataPoints[i];
@@ -219,9 +237,19 @@ export default function AnimatedHeroBackground() {
         }
         const fadeIn = smoothstep(0, 0.3, age);
         const fadeOut = 1 - smoothstep(d.life - 0.6, d.life, age);
-        const alpha = fadeIn * fadeOut * 0.4;
-        ctx.fillStyle = `rgba(140,140,140,${alpha.toFixed(3)})`;
+        
+        // Control de opacidad máxima (0.6 para no saturar)
+        const alpha = fadeIn * fadeOut * 0.6; 
+        
+        // Efecto Neon (Sombra)
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `rgba(${d.color}, ${alpha})`;
+
+        ctx.fillStyle = `rgba(${d.color}, ${alpha.toFixed(3)})`;
         ctx.fillText(d.label, d.x, d.y);
+
+        // Reset de sombra para no afectar otras partes del canvas
+        ctx.shadowBlur = 0;
       }
     }
 

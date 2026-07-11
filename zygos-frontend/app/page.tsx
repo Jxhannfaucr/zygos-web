@@ -55,7 +55,7 @@ export default async function Catalogo() {
         </div>
       </header>
 
-      {/* HERO SECTION IMMERSIVO */}
+{/* HERO SECTION IMMERSIVO */}
       <section className="relative w-full h-[85vh] flex flex-col items-center justify-between py-12 border-b border-neutral-900 bg-black text-white px-4 overflow-x-hidden">
         
         {/* NUEVO FONDO ANIMADO */}
@@ -70,9 +70,10 @@ export default async function Catalogo() {
             // Origin: Upala, CR //
           </span>
           
-          <h1 className="text-4xl sm:text-5xl md:text-8xl lg:text-9xl font-black tracking-tighter uppercase leading-[0.85] mb-6 w-full break-words">
+          {/* Tamaños unificados: 5xl en móvil, escalando juntos hasta 9xl en escritorio */}
+          <h1 className="text-[2.6rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-black tracking-tighter uppercase leading-[0.85] mb-6 w-full break-words">
             Unión<br /> 
-            <span className="text-3xl sm:text-5xl">Streetwear</span>
+            Streetwear
           </h1>
 
           <p className="text-neutral-400 text-xs sm:text-sm md:text-base font-medium max-w-sm leading-relaxed px-2">
@@ -107,6 +108,7 @@ export default async function Catalogo() {
               <div key={producto._id} className="group relative flex flex-col">
                 
                 {/* 3. Contenedor del Carrusel con CSS Scroll Snap y tu diseño */}
+{/* 3. Contenedor del Carrusel con CSS Scroll Snap y tu diseño */}
                 <div className="relative aspect-[4/5] w-full bg-neutral-900 mb-6 overflow-hidden">
                   <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar h-full w-full">
                     {producto.galeria && producto.galeria.length > 0 ? (
@@ -116,7 +118,7 @@ export default async function Catalogo() {
                             src={imgUrl} 
                             alt={`${producto.nombre} - Vista ${index + 1}`}
                             fill
-                            className="object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-500"
+                            className="object-cover object-center md:grayscale group-hover:grayscale-0 transition-all duration-500"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             priority={index === 0}
                           />
@@ -136,6 +138,16 @@ export default async function Catalogo() {
                   <div className="absolute top-4 right-4 bg-white text-black text-xs font-bold px-3 py-1 uppercase tracking-widest z-10">
                     In Stock
                   </div>
+
+                  {/* Indicador minimalista de Swipe (Solo móvil, si hay >1 imagen) */}
+                  {producto.galeria && producto.galeria.length > 1 && (
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black/60 backdrop-blur-md text-white text-[9px] font-mono tracking-[0.2em] uppercase px-3 py-1.5 border border-white/20 z-10 pointer-events-none md:hidden">
+                      <span>Desliza</span>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
+                    </div>
+                  )}
                 </div>
                 
                 {/* Detalles de la Prenda */}
